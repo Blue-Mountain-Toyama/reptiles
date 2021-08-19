@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def index(request):
+	params = {
+		"msg": "Hello, world",
+	}
+	return render(request, 'top/index.html', params)
