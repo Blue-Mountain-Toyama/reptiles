@@ -27,9 +27,9 @@ services:
             MYSQL_PASSWORD: BT6,NKsJ+eqm
             TZ: 'Asia/Tokyo'
         volumes:
-            - ./mysql:/var/lib/mysql
+            - ./mysql:/var/lib/reptiles/mysql
             - ./sql:/docker-entrypoint-initdb.d
-            - ./backup:/var/lib/backup
+            - ./backup:/var/lib/reptiles/backup
 
     python:
         build: ./python
