@@ -22,14 +22,23 @@ def gentext(self, input_text):
         num_return_sequences = 10
 
         # トークナイザ、モデルの読み込み
-        tokenizer = T5Tokenizer.from_pretrained("./pretrained/tokenizer_rinna")
+        try:
+            tokenizer = T5Tokenizer.from_pretrained('./pretrained/tokenizer_rinna')
+        except OSError:
+            tokenizer = T5Tokenizer.from_pretrained('rinna/japanese-gpt2-medium')
+            tokenizer.save_pretrained('/pretrained/tokenizer_rinna')
         tokenizer.do_lower_case = True
-        model = AutoModelForCausalLM.from_pretrained("./pretrained/model_rinna", force_download=True)
+
+        try:
+            model = AutoModelForCausalLM.from_pretrained('./pretrained/model_rinna', force_download=True)
+        except OSError:
+            model = AutoModelForCausalLM.from_pretrained('rinna/japanese-gpt2-medium')
+            model.save_pretrained('/pretrained/model_rinna')
 
         # 入力テキストをエンコード
         input_ids = tokenizer.encode(
             input_text,
-            return_tensors="pt"
+            return_tensors='pt'
         )
 
         # 出力文章の生成
