@@ -19,4 +19,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("top.urls")),
+<<<<<<< Updated upstream
+    path('gentext', include("gentext.urls")),
+=======
+    path('gentext/', include("gentext.urls")),
+>>>>>>> Stashed changes
 ]
