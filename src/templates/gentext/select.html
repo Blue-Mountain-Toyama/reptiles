@@ -3,7 +3,9 @@
 
 {% block main %}
 
-  {{ result }}
+  {% for data in results %}
+    <div class="mb-2">{{ data }}</div>
+  {% endfor %}
 
   <div>
     <a class="btn btn-primary" href="{% url 'gentext:add' %}">戻る</a>

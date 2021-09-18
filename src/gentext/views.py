@@ -49,8 +49,16 @@ def select(request):
 
     # セッションで保持したtask_idをもとに結果を取得
     if results[0].task_id == request.session['task_id']:
-        params['result'] = parse.unquote(list(results.values_list('result', flat=True))[0].replace('\\\\', '\s\\'))
+        # 表示文字列の成形
+        molded_results = list(results.values_list('result', flat=True))[0]
+        # 不要な文字をトリム
+        molded_results = re.sub(r'\[|\]|\"', '', molded_results)
+        # 文字列のデコード
+        molded_results = molded_results.encode().decode('unicode-escape')
+        # 文字列をカンマで分割してリスト化
+        molded_results = molded_results.split(',')
+        params['results'] = molded_results
     else:
-        params['result'] = 'wait'
+        params['results'] = 'wait'
 
     return render(request, 'gentext/select.html', params)
