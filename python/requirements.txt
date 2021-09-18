@@ -4,12 +4,6 @@ uwsgi==2.0.18
 mysqlclient==1.4.6
 django-bootstrap4
 
-<<<<<<< Updated upstream
-numpy
-torch
-transformers
-sentencepiece
-=======
 # 機械学習パッケージ
 numpy
 torch
@@ -22,4 +16,3 @@ django-celery-results
 redis-server==5.0.9
 django-redis
 flower
->>>>>>> Stashed changes
