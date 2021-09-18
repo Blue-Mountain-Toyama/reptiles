@@ -12,15 +12,18 @@ from logging import getLogger
 # 日記生成のトップ画面
 #############################################################################
 def index(request):
-    return HttpResponse('hello')
+    params = {}
+    return render(request, 'gentext/index.html', params)
 
 #############################################################################
 # 日記追加画面
 #############################################################################
 def add(request):
+    params = {}
+    
     # セッションの値をクリア
     request.session['task_id'] = ''
-    return render(request, 'gentext/add.html')
+    return render(request, 'gentext/add.html', params)
 
 #############################################################################
 # 文章の生成と選択画面
