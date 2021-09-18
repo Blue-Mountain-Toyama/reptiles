@@ -3,20 +3,26 @@
 
 {% block main %}
 
-  {% for data in results %}
-    <div class="mb-2">{{ data }}</div>
-  {% endfor %}
+  {# 結果の表示 #}
+  {% if results != 'wait' %}
+    {% for data in results %}
+      <div class="mb-2">{{ data }}</div>
+    {% endfor %}
+  {% endif %}
 
+  {# 日記追加画面に戻る #}
   <div>
     <a class="btn btn-primary" href="{% url 'gentext:add' %}">戻る</a>
   </div>
 
-{% if result == 'wait' %}
-<script type="text/javascript">
-setTimeout(() => {
-    location.reload();
-}, 5000);
-</script>
-{% endif %}
+
+  {# 結果が取得されるまでは5秒ごとに画面をリロード #}
+  {% if results == 'wait' %}
+    <script type="text/javascript">
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
+    </script>
+  {% endif %}
 
 {% endblock %}
