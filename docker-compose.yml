@@ -11,6 +11,7 @@ services:
             - ./nginx/log:/var/log/nginx
             - ./src/static:/static
         depends_on:
+            - redis
             - python
         environment:
             TZ: 'Asia/Tokyo'
@@ -40,6 +41,35 @@ services:
         expose:
             - "8001"
         depends_on:
+            - redis
             - db
         environment:
             TZ: 'Asia/Tokyo'
+
+    redis:
+        image: redis:latest
+        command: redis-server
+        ports:
+            - 6379:6379
+        tty: true
+
+    celery:
+        build: ./python
+        command: celery -A app worker -l info
+        volumes:
+            - ./src:/code
+
+    monitor:
+        build: ./python
+        tty: true
+        ports:
+            - 5555:5555
+        volumes:
+            - ./src:/code
+        command: celery -A app flower
+        environment:
+            - CELERY_BROKER_URL=redis://redis:6379/1
+            - CELERY_RESULT_BACKEND=redis://redis:6379/1
+        depends_on:
+            - python
+            - redis
