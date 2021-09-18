@@ -129,6 +129,9 @@ dmypy.json
 .pyre/
 
 # Pretrained model
-src/pretrained/
+src/pretrained
+
+# Local file
 node_modules
 mysql
+backup
