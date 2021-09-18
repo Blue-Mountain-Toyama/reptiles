@@ -15,6 +15,15 @@
 <body style="min-height: 100vh;">
 <div class="wrap">
 
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 <header>
 </header>
 
