@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -68,6 +69,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'top.apps.TopConfig',
+    'gentext.apps.GentextConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +164,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://redis:6379/1')
+CELERY_RESULT_BACKEND = 'django-db'
