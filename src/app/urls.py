@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("top.urls")),
     path('gentext/', include("gentext.urls")),
-    path('data/', include("data.urls")),
+    path('corpus/', include("corpus.urls")),
 ]

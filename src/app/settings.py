@@ -70,7 +70,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'top.apps.TopConfig',
     'gentext.apps.GentextConfig',
-    'data.apps.DataConfig',
+    'corpus.apps.CorpusConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -20,7 +20,7 @@ def index(request):
 #############################################################################
 def add(request):
     params = {}
-    
+
     # セッションの値をクリア
     request.session['task_id'] = ''
     return render(request, 'gentext/add.html', params)

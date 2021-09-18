@@ -1,8 +1,13 @@
 from django.shortcuts import render
 
 #############################################################################
-# ファインチューニング用のテキスト投入
+# コーパスにデータを追加
 #############################################################################
 def index(request):
 	params = {}
-	return render(request, 'data/index.html', params)
+
+	if 'btn_send' in request.POST:
+		text = request.POST['text']
+		params['text'] = text
+
+	return render(request, 'corpus/index.html', params)
