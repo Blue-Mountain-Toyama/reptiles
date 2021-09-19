@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django_celery_results.models import TaskResult
 from django.template import loader
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from app.tasks import gentext
 from urllib import parse
 import re
@@ -11,23 +12,33 @@ from logging import getLogger
 #############################################################################
 # 日記生成のトップ画面
 #############################################################################
+@login_required
 def index(request):
     params = {}
+
+    if 'btn_decide' in request.POST:
+        params['text'] = request.POST['text']
+    else:
+        # セッションの値をクリア
+        request.session['task_id'] = ''
+
     return render(request, 'gentext/index.html', params)
 
 #############################################################################
 # 日記追加画面
 #############################################################################
-def add(request):
+@login_required
+def generate(request):
     params = {}
 
     # セッションの値をクリア
     request.session['task_id'] = ''
-    return render(request, 'gentext/add.html', params)
+    return render(request, 'gentext/generate.html', params)
 
 #############################################################################
 # 文章の生成と選択画面
 #############################################################################
+@login_required
 def select(request):
     params = {}
 
