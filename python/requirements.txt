@@ -3,6 +3,7 @@ Django==3.0.4
 uwsgi==2.0.18
 mysqlclient==1.4.6
 django-bootstrap4
+django-widget-tweaks
 
 # 機械学習パッケージ
 numpy
