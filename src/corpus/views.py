@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 #############################################################################
 # コーパスにデータを追加
 #############################################################################
+@login_required
 def index(request):
 	params = {}
 
