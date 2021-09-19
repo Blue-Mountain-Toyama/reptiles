@@ -3,6 +3,281 @@
 
 {% block main %}
 
-hello, world
+{{ text }}
 
+<div id="canvas">
+  <div id="diary-zoom">
+    <div class="diary">
+      {# タブ #}
+      <div ignore="1" class="tabs">
+        <div class="left"></div>
+        <div class="right"></div>
+      </div>
+
+      {# 日記 #}
+      <div class="hard cover"></div>
+      <div class="hard"></div>
+      <div>Page1</div>
+      <div>Page2</div>
+      <div>Page3</div>
+      <div class="generate d-flex align-items-center text-center">
+        <a class="btn btn-primary" href="{% url 'gentext:generate' %}">新しい日記を書く</a>
+      </div>
+      <div class="hard before-last"></div>
+      <div class="hard last"></div>
+    </div>
+  </div>
+
+  <div id="slider-bar" class="turnjs-slider">
+    <div id="slider"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+let page_num = 8;
+
+function loadApp()
+{
+  let diary = $(".diary");
+
+  if( diary.width() == 0 || diary.height() == 0 )
+  {
+    setTimeout(loadApp, 10);
+    return;
+  }
+
+  // マウスホイール
+
+  $("#diary-zoom").mousewheel(function(event, delta, deltaX, deltaY)
+  {
+    let data = $(this).data();
+    let step = page_num;
+    let diary = $(".diary");
+    let actualPos = $("#slider").slider("value") * step;
+
+    if( typeof(data.scrollX) === "undefined" )
+    {
+      data.scrollX = actualPos;
+      data.scrollPage = diary.turn("page");
+    }
+
+    data.scrollX = Math.min($("#slider").slider("option", "max") * step,
+      Math.max(0, data.scrollX + deltaX));
+
+    let actualView = Math.round(data.scrollX / step);
+    let page = Math.min(diary.turn("pages"), Math.max(1, actualView*2 - 2));
+
+    if( $.inArray(data.scrollPage, diary.turn("view", page)) == -1 )
+    {
+      data.scrollPage = page;
+      diary.turn("page", page);
+    }
+
+    if (data.scrollTimer)
+      clearInterval(data.scrollTimer);
+
+    data.scrollTimer = setTimeout(function()
+    {
+      data.scrollX = undefined;
+      data.scrollPage = undefined;
+      data.scrollTimer = undefined;
+    }, 1000);
+
+  });
+
+  // スライダー
+
+  $("#slider").slider({
+    min: 1,
+    max: 100,
+
+    start: function(event, ui) {
+      if( !window._thumbPreview )
+      {
+        _thumbPreview = $("<div />", {"class": "thumbnail"}).html("<div></div>");
+        setPreview(ui.value);
+        _thumbPreview.appendTo($(ui.handle));
+      }
+      else
+      {
+        setPreview(ui.value);
+      }
+
+      moveBar(false);
+    },
+
+    slide: function(event, ui)
+    {
+      setPreview(ui.value);
+    },
+
+    stop: function()
+    {
+      if( window._thumbPreview )
+        _thumbPreview.removeClass("show");
+
+      $(".diary").turn("page", Math.max(1, $(this).slider("value") * 2 - 2));
+    }
+  });
+
+
+  // URIs
+
+  Hash.on("^page\/([0-9]*)$", {
+    yep: function(path, parts)
+    {
+      var page = parts[1];
+
+      if( page !== undefined )
+      {
+        if ($(".diary").turn("is"))
+          $(".diary").turn("page", page);
+      }
+
+    },
+    nop: function(path)
+    {
+      if( $(".diary").turn("is") )
+      {
+        $(".diary").turn("page", 1);
+      }
+    }
+  });
+
+  // Arrows
+
+  $(document).keydown(function(e){
+    let previous = 37;
+    let next = 39;
+
+    switch (e.keyCode)
+    {
+      case previous:
+        $(".diary").turn("previous");
+        break;
+
+      case next:
+        $(".diary").turn("next");
+        break;
+    }
+
+  });
+
+  // 日記
+
+  diary.turn(
+  {
+    pages: page_num,
+    elevation: 50,
+    acceleration: false,
+    gradients: true,
+    autoCenter: true,
+    duration: 1000,
+    when: {
+    turning: function(e, page, view)
+    {
+      let diary = $(this);
+      let currentPage = diary.turn("page");
+      let pages = diary.turn("pages");
+
+      if( currentPage > 3 && currentPage < pages - 3 )
+      {
+        if( page == 1 )
+        {
+          diary.turn("page", 2).turn("stop").turn("page", page);
+          e.preventDefault();
+          return;
+        }
+        else if( page == pages )
+        {
+          diary.turn("page", pages-1).turn("stop").turn("page", page);
+          e.preventDefault();
+          return;
+        }
+      }
+      else if( page > 3 && page < pages - 3 )
+      {
+        if( currentPage == 1 )
+        {
+          diary.turn("page", 2).turn("stop").turn("page", page);
+          e.preventDefault();
+          return;
+        }
+        else if( currentPage == pages )
+        {
+          diary.turn("page", pages-1).turn("stop").turn("page", page);
+          e.preventDefault();
+          return;
+        }
+      }
+
+      Hash.go("page/"+page).update();
+
+      if( page == 1 || page == pages )
+        $(".diary .tabs").hide();
+    },
+
+    turned: function(e, page, view)
+    {
+      console.log("test");
+      let diary = $(this);
+
+      $("#slider").slider("value", getViewNumber(diary, page));
+
+      if( page != 1 && page != diary.turn("pages") )
+        $(".diary .tabs").fadeIn(500);
+      else
+        $(".diary .tabs").hide();
+
+      diary.turn("center");
+      updateTabs();
+    },
+
+    start: function(e, pageObj)
+    {
+      moveBar(true);
+    },
+
+    end: function(e, pageObj)
+    {
+      let diary = $(this);
+
+      setTimeout(function() {
+        $("#slider").slider("value", getViewNumber(diary));
+      }, 1);
+
+      moveBar(false);
+    },
+  }
+  }). turn("page", 2);
+
+
+  $("#slider").slider("option", "max", numberOfViews(diary));
+
+  diary.addClass("animated");
+
+
+  // キャンバスを表示
+
+  $("#canvas").css({visibility: "visible"});
+}
+
+// キャンバスを非表示
+
+$("#canvas").css({visibility: "hidden"});
+
+
+// yepnope.jsによる読み込み
+
+yepnope({
+  test: Modernizr.csstransforms,
+  yep: ["/static/js/turn-js/lib/turn.min.js", "/static/css/turn-js/jquery.ui.css"],
+  nope: ["/static/js/turn-js/lib/turn.html4.min.js", "/static/css/turn-js/jquery.ui.html4.css"],
+  both: ["/static/css/turn-js/diary.css", "/static/js/turn-js/diary.js"],
+  complete: loadApp
+});
+
+</script>
 {% endblock %}

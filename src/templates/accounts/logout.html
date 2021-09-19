@@ -1,0 +1,11 @@
+{% extends "_common/nologin.html" %}
+{% block sub_title %}TOP{% endblock %}
+
+{% block main %}
+
+<form method="POST" action="">
+  {% csrf_token %}
+  <button type="submit">ログアウト</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+.header
+{
+	height: $header-height;
+
+	.header-title,
+	.nologin-title
+	{
+		color: $col-text;
+		text-decoration: none;
+		border-bottom: none;
+	}
+
+	.header-title
+	{
+		color: $white;
+	}
+}

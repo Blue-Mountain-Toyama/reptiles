@@ -1,0 +1,27 @@
+$header-height:		60px;
+$footer-height:		60px;
+
+// $col-primary:   #07575B;
+// $col-secondary: #66A5AD;
+// $col-light:     #C4DFE6;
+// $col-dark:      #003B46;
+
+$col-primary:   #ff6822;
+$col-secondary: #EBDCB2;
+$col-light:     #FFDB5C;
+$col-dark:      #83c7ff;
+
+
+$col-text:      #333;
+
+$theme-colors: (
+  primary:    $col-primary,
+  secondary:  $col-secondary,
+  light:      $col-light,
+  dark:       $col-dark,
+);
+
+@font-face {
+  font-family: 'TitleFont';
+  src: url('/static/font/bokutachi.otf');
+}

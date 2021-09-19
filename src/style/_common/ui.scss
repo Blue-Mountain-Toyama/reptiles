@@ -1,0 +1,38 @@
+.btn-primary
+{
+	color: $white;
+}
+
+.ui-heading
+{
+	margin: $spacer auto $spacer*3;
+	padding: 0 $spacer;
+	display: inline-block;
+	border-bottom: 4px solid $col-primary;
+	text-align: center;
+}
+
+.ui-form
+{
+	width: 70%;
+	max-width: 700px;
+	background-color: $white;
+	margin: 0 auto;
+}
+
+@include media-breakpoint-down(md)
+{
+	.ui-form
+	{
+		width: 95%;
+	}
+}
+
+.invalid-feedback
+{
+	ul
+	{
+		list-style: none;
+		padding-left: 0;
+	}
+}

@@ -1,8 +1,14 @@
+@import "settings.scss";
+@import "bootstrap/bootstrap.scss";
 @import "_common/*";
 @import "top/*";
+@import "gentext/*";
 
-//	sample code
-body
+
+#wrap
 {
-	background-color: #ccc;
+	min-height: 100vh;
+	min-width: 100vw;
+	overflow: hidden;
+	color: $col-text;
 }
