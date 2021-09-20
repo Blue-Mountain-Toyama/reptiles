@@ -1,13 +1,13 @@
 body{
 	margin:0;
 	padding:0;
-	overflow:hidden;
+	overflow-x: hidden;
 }
 
 #canvas{
 	width: 960px;
 	height: 600px;
-	margin: 100px auto;
+	margin: 30px auto 50px auto;
 }
 
 #diary-zoom{
@@ -148,7 +148,7 @@ body{
 
 .diary .tabs a{
 	color:black;
-	-webkit-border-image: url(static/img/tab-off.png) 5 20 5 20 repeat stretch;
+	-webkit-border-image: url('/static/img/tab-off.png') 5 20 5 20 repeat stretch;
 	border-width: 5px 20px 5px 20px;
 	display:inline-block;
 	font:bold 11px arial;
@@ -160,7 +160,7 @@ body{
 
 .diary .tabs .on,
 .diary .tabs .on:hover{
-	-webkit-border-image: url(static/img/tab-on.png) 5 20 5 20 repeat stretch;
+	-webkit-border-image: url('/static/img/tab-on.png') 5 20 5 20 repeat stretch;
 	cursor:default;
 }
 
@@ -168,5 +168,30 @@ body{
 	color:black;
 	text-decoration: none;
 	cursor:pointer;
-	-webkit-border-image: url(static/img/tab-hover.png) 5 20 5 20 repeat stretch;
+	-webkit-border-image: url('/static/img/tab-hover.png') 5 20 5 20 repeat stretch;
+}
+
+@media screen and (max-width: 1023px)
+{
+	#canvas
+	{
+		margin-bottom: 0;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 2/3;
+	}
+
+	#diary-zoom
+	{
+		width: 100%;
+		height: auto;
+	}
+
+	.diary
+	{
+		margin: 0 auto;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 2/3;
+	}
 }

@@ -17,12 +17,13 @@
       {# 日記 #}
       <div class="hard cover"></div>
       <div class="hard"></div>
-      <div>Page1</div>
-      <div>Page2</div>
-      <div>Page3</div>
+
       <div class="generate d-flex align-items-center text-center">
         <a class="btn btn-primary" href="{% url 'gentext:generate' %}">新しい日記を書く</a>
       </div>
+
+      <div class="page">page</div>
+
       <div class="hard before-last"></div>
       <div class="hard last"></div>
     </div>
@@ -36,7 +37,17 @@
 
 <script type="text/javascript">
 
-let page_num = 8;
+let page_num = $(".diary .hard").length + $(".diary .page").length + 1;
+let mode = "double";
+
+if($(window).width() < 1024)
+{
+  mode = "single";
+  $(".diary").children(".hard").each(function(i, value)
+  {
+    value.remove(".hard");
+  });
+}
 
 function loadApp()
 {
@@ -175,6 +186,7 @@ function loadApp()
     gradients: true,
     autoCenter: true,
     duration: 1000,
+    display: mode,
     when: {
     turning: function(e, page, view)
     {
@@ -221,7 +233,6 @@ function loadApp()
 
     turned: function(e, page, view)
     {
-      console.log("test");
       let diary = $(this);
 
       $("#slider").slider("value", getViewNumber(diary, page));
@@ -277,6 +288,11 @@ yepnope({
   nope: ["/static/js/turn-js/lib/turn.html4.min.js", "/static/css/turn-js/jquery.ui.html4.css"],
   both: ["/static/css/turn-js/diary.css", "/static/js/turn-js/diary.js"],
   complete: loadApp
+});
+
+$(window).resize(function()
+{
+  location.reload();
 });
 
 </script>
