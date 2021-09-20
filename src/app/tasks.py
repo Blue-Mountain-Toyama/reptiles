@@ -3,6 +3,7 @@ from celery import shared_task
 from transformers import T5Tokenizer, AutoModelForCausalLM
 import time
 from django.core import serializers
+from .scraper import scraper
 
 
 #############################################################################
@@ -11,6 +12,8 @@ from django.core import serializers
 @shared_task(bind=True)
 def gentext(self, input_text):
     try:
+        illustration_file = scraper(input_text)
+
         #############################################################################
         # 設定
         #############################################################################
@@ -55,6 +58,8 @@ def gentext(self, input_text):
 
         # 生成文章の成形
         generated_sequences = []
+        generated_sequences.append(illustration_file)
+
         for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
             generated_sequence = generated_sequence.tolist()
 
