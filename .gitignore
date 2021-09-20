@@ -136,3 +136,5 @@ node_modules
 package-lock.json
 mysql
 backup
+
+src/static/img/scraper
