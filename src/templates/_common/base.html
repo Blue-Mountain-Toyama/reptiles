@@ -9,6 +9,7 @@
   <title>{% block sub_title %}{% endblock %}</title>
 
   {# CSS読み込み #}
+  <link href="{% static 'css/_common/bootstrap-datepicker.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
   {# JavaScript読み込み #}
@@ -19,6 +20,8 @@
   <script type="text/javascript" src="/static/js/turn-js/lib/hash.js"></script>
   <script type="text/javascript" src="/static/js/_common/bootstrap.js"></script>
   <script type="text/javascript" src="/static/js/_common/bootstrap.bundle.js"></script>
+  <script type="text/javascript" src="/static/js/_common/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.ja.min.js"></script>
 
   <script type="text/javascript">
     // エラーモーダルの表示

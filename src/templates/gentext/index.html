@@ -3,8 +3,6 @@
 
 {% block main %}
 
-{{ text }}
-
 <div id="canvas">
   <div id="diary-zoom">
     <div class="diary">
@@ -22,7 +20,17 @@
         <a class="btn btn-primary" href="{% url 'gentext:generate' %}">新しい日記を書く</a>
       </div>
 
-      <div class="page">page</div>
+      {% for page in pages %}
+        <div class="page">
+          <div>
+            <img src="{{ page.img_path }}">
+          </div>
+          <div>{{ page.date }}</div>
+          <div>{{ page.body }}</div>
+        </div>
+      {% empty %}
+        <div>ページが見つかりませんでした。新しい日記を書いてみましょう</div>
+      {% endfor %}
 
       <div class="hard before-last"></div>
       <div class="hard last"></div>
