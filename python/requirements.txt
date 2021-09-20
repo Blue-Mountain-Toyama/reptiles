@@ -5,6 +5,9 @@ mysqlclient==1.4.6
 django-bootstrap4
 django-widget-tweaks
 
+beautifulsoup4
+lxml
+
 # 機械学習パッケージ
 numpy
 torch
