@@ -1,0 +1,95 @@
+{% extends "_common/base.html" %}
+{% block sub_title %}TOP{% endblock %}
+
+{% block main %}
+
+<div class="gentext-generate text-center">
+
+  <div class="ui-heading">
+    <h2>文章を生成します</h2>
+  </div>
+
+  <div class="mb-4">
+    <div class="flex-fill">
+      <form class="ui-form bg-white shadow rounded-3 p-5" method="POST" action="{% url 'gentext:result_all' %}">
+        {% csrf_token %}
+
+        <diV class="d-flex justfy-content-start mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode" value="range" id="mode_range" checked>
+            <label class="form-check-label" for="mode_range">
+              期間選択
+            </label>
+          </div>
+          <div class="form-check mx-4">
+            <input class="form-check-input" type="radio" name="mode" value="span" id="mode_span">
+            <label class="form-check-label" for="mode_span">
+              日数選択
+            </label>
+          </div>
+        </diV>
+
+        <div class="range-box">
+          <div class="text-start">夏休みの期間指定</div>
+          <div class="input-group input-daterange mt-2 mb-4">
+            <input type="text" class="form-control text-start date-picker" name="diary_date_from">
+            <div class="input-group-addon mx-2">to</div>
+            <input type="text" class="form-control text-start date-picker" name="diary_date_to">
+          </div>
+        </div>
+
+        <div class="span-box hidden">
+          <div class="form-floating mb-4">
+            <input class="form-control date-picker" type="text" name="diary_date" placeholder="date">
+            <label>日記の日付</label>
+          </div>
+          <select name="span" class="form-select mb-4" aria-label="Default select">
+            <option value="none" selected>作成する日数を選択してください</option>
+            <option value="day">1日</option>
+            <option value="week">1週間(7日)</option>
+            <option value="month">1カ月(30日)</option>
+          </select>
+        </div>
+
+        <div class="mt-1 d-flex justify-content-center">
+          <a class="btn btn-secondary mx-1" href="{% url 'gentext:index' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace" viewBox="0 0 16 16">
+              <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
+              <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
+            </svg>
+            戻る
+          </a>
+          <button class="btn btn-primary" type="submit" name="btn_send">日記生成</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $(".date-picker").datepicker({
+    format: "yyyy-mm-dd",
+    todayBtn: "linked",
+    language: "ja",
+  });
+
+  let mode = $("input[name='mode']");
+
+  mode.change(function()
+  {
+    console.log($(this).val());
+    if( $(this).val() == 'span' )
+    {
+      $('.range-box').addClass('hidden');
+      $('.span-box').removeClass('hidden');
+    }
+    else if( $(this).val() == 'range' )
+    {
+      $('.span-box').addClass('hidden');
+      $('.range-box').removeClass('hidden');
+    }
+  })
+</script>
+
+{% endblock %}

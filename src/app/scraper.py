@@ -17,8 +17,19 @@ def scraper(input):
         soup = BeautifulSoup(html, 'lxml')
         # 画像タグを取り出す(select_one で１つだけ)
         a_list =soup.select('div.boxmeta.clearfix > h2 > a')
+
         if len(a_list) != 0:
             print("Image was taken from : {}".format(url))
+            break
+        else:
+            word = urllib.parse.quote("なつやすみ")
+            url = 'https://www.irasutoya.com/search?q=' + str(word)
+            # 検索結果ページのhtmlを取得
+            html = requests.get(url).text
+            # 検索結果ページのオブジェクトを作成
+            soup = BeautifulSoup(html, 'lxml')
+            # 画像タグを取り出す(select_one で１つだけ)
+            a_list =soup.select('div.boxmeta.clearfix > h2 > a')
             break
 
 

@@ -25,6 +25,7 @@ class DiaryPage(models.Model):
 	keyword		= models.CharField(max_length=62, verbose_name='キーワード')
 	body		= models.TextField(verbose_name='本文')
 	img_path	= models.CharField(max_length=256, verbose_name='画像パス', default='')
+	favorite	= models.BooleanField(verbose_name='お気に入り', default=False)
 	is_public	= models.BooleanField(verbose_name='公開フラグ', default=False)
 	created_at	= models.DateTimeField(auto_now_add=True)
 	updated_at	= models.DateTimeField(auto_now=True)
@@ -34,3 +35,11 @@ class DiaryPage(models.Model):
 
 	class Meta:
 		verbose_name_plural = '日記ページ'
+
+#############################################################################
+# 日記の設定用
+#############################################################################
+class DiaryConfig(models.Model):
+	diary		= models.ForeignKey(Diary, on_delete=models.CASCADE)
+	main_color	= models.CharField(max_length=6, verbose_name='メインカラー', default='00AFCC')
+	sub_color	= models.CharField(max_length=6, verbose_name="サブカラー", default='4169E1')

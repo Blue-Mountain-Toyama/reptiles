@@ -16,7 +16,7 @@ function addPage(page, diary)
 //	タブ
 function updateTabs()
 {
-	let tabs = {2: 'top'};
+	let tabs = {2: '新しいページを追加する'};
 	let left = [];
 	let right = [];
 	let diary = $('.diary');

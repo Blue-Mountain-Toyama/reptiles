@@ -9730,3 +9730,7 @@ fieldset:disabled .btn {
   color: #333;
   background-color: #CCC;
 }
+
+.hidden {
+  display: none;
+}

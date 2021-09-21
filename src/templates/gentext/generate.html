@@ -21,6 +21,11 @@
           <input class="form-control" type="text" name="input_text" placeholder="keyword">
           <label>キーワード</label>
         </div>
+        <select name="type" class="form-select mb-4" aria-label="Default select">
+          <option value="none" selected>文章タイプを選択してください</option>
+          <option value="place">行った場所</option>
+          <option value="event">やったこと</option>
+        </select>
 
         <div class="mt-1 d-flex justify-content-center">
           <a class="btn btn-secondary mx-1" href="{% url 'gentext:index' %}">

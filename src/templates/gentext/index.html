@@ -18,6 +18,7 @@
 
       <div class="generate d-flex align-items-center text-center">
         <a class="btn btn-primary" href="{% url 'gentext:generate' %}">新しい日記を書く</a>
+        <a class="btn btn-outline-primary" href="{% url 'gentext:generate_all' %}">一気につくる</a>
       </div>
 
       {% for page in pages %}
@@ -29,7 +30,12 @@
           <div>{{ page.body }}</div>
         </div>
       {% empty %}
-        <div>ページが見つかりませんでした。新しい日記を書いてみましょう</div>
+        <div class="page">
+          <div class="h-100 w-100 text-center p-5">
+            ページが見つかりませんでした。<br>
+            新しい日記を書いてみましょう。
+          </div>
+        </div>
       {% endfor %}
 
       <div class="hard before-last"></div>
@@ -47,6 +53,13 @@
 
 let page_num = $(".diary .hard").length + $(".diary .page").length + 1;
 let mode = "double";
+
+if( (page_num % 2) != 0 )
+{
+  $(".before-last").before("<div class='page-wrapper'></div>");
+  console.log($('.before-last').before())
+  page_num++;
+}
 
 if($(window).width() < 1024)
 {

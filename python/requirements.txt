@@ -9,8 +9,8 @@ beautifulsoup4
 lxml
 
 # 機械学習パッケージ
-numpy
 torch
+numpy
 transformers==4.4
 sentencepiece
 
