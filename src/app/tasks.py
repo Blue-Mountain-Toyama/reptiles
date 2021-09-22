@@ -129,7 +129,9 @@ def gentext_all(self, days):
 
             # スクレイピング
             illustration_file = scraper(keyword)
-            generated_sequences.append(illustration_file)
+            if illustration_file == '':
+                illustration_file = 'none'
+            generated_sequences.append(str(illustration_file))
 
             # 入力テキストをエンコード
             input_id = tokenizer.encode(
@@ -159,8 +161,10 @@ def gentext_all(self, days):
             total_sequence = (
                 created_text + text[len(tokenizer.decode(input_id[0], clean_up_tokenization_spaces=True)) :]
             )
+            if total_sequence == '':
+                total_sequence = created_text
             print(total_sequence)
-            generated_sequences.append(total_sequence)
+            generated_sequences.append(str(total_sequence))
 
         return generated_sequences
 

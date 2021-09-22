@@ -169,6 +169,9 @@ def result_all(request):
             date_first = date_from
             days = datetime.datetime.strptime(date_to, '%Y-%m-%d') - datetime.datetime.strptime(date_from, '%Y-%m-%d')
             days = days.days + 1
+            if days < 1:
+                messages.error(request, '日記の期間の指定が不正です。')
+                return redirect('gentext:generate_all')
 
         elif request.POST['mode'] == 'span':
             date = request.POST['diary_date']
@@ -241,7 +244,7 @@ def result_all(request):
         for data, file in zip(data_list, file_list):
             diary = Diary.objects.get(user=request.user)
 
-            if file.strip() == 'none':
+            if file.strip() == 'none' or file.strip() == 'None':
                 file = 'default.png'
 
             diary_page = DiaryPage()

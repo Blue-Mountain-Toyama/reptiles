@@ -9723,6 +9723,10 @@ fieldset:disabled .btn {
   margin: auto;
 }
 
+.page .page-text {
+  text-decoration: underline #CCC;
+}
+
 #wrap {
   min-height: 100vh;
   min-width: 100vw;

@@ -1,0 +1,22 @@
+# Djangoまわりのパッケージ
+Django==3.0.4
+uwsgi==2.0.18
+mysqlclient==1.4.6
+django-bootstrap4
+django-widget-tweaks
+
+beautifulsoup4
+lxml
+
+# 機械学習パッケージ
+torch
+numpy
+transformers==4.4
+sentencepiece
+
+# 非同期処理
+celery==5.1.2
+django-celery-results
+redis-server==5.0.9
+django-redis
+flower

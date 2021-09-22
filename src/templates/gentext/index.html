@@ -22,13 +22,15 @@
       </div>
 
       {% for page in pages %}
-        <div class="page">
-          <div>
-            <img src="{{ page.img_path }}">
+      <div class="page">
+        <div class="d-flex flex-column m-3 h-100">
+          <div class="page-date text-end">{{ page.date }}</div>
+          <div class="page-image h-50 text-center d-flex justify-content-center my-3 border">
+            <img class="h-100" src="{{ page.img_path }}">
           </div>
-          <div>{{ page.date }}</div>
-          <div>{{ page.body }}</div>
+          <div class="page-text">{{ page.body }}</div>
         </div>
+      </div>
       {% empty %}
         <div class="page">
           <div class="h-100 w-100 text-center p-5">
